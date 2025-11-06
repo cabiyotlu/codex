@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cabi.io | Gücünü Optimize Et</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Roboto:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0D1117; --panel:#161B22; --muted:#0F141A; --text:#E0E0E0; --sub:#CCCCCC;
+      --blue:#00BFFF; --yellow:#CCF000; --border:#222831; --grey:#383E42;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:'Roboto',sans-serif;font-weight:500;background:var(--bg);color:var(--text)}
+    a{color:var(--blue);text-decoration:none}
+    header{background:var(--panel);padding:1.2rem 2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;position:sticky;top:0;z-index:20;border-bottom:1px solid var(--border)}
+    header h1{color:var(--blue);font-family:'Orbitron',sans-serif;font-size:1.6rem;margin:0}
+    nav a{color:var(--text);font-weight:500;margin:0.5rem 1rem;display:inline-block}
+    .hero{text-align:center;padding:4rem 1rem;background:radial-gradient(circle, rgba(0,191,255,0.12) 0%, var(--bg) 100%)}
+    .hero h2{font-family:'Orbitron',sans-serif;font-size:2.2rem;color:var(--blue);margin:0 0 1rem}
+    .hero p{color:var(--sub);font-weight:400;font-size:1rem;max-width:680px;margin:0 auto}
+    .cta-buttons{display:flex;flex-wrap:wrap;justify-content:center;gap:1rem;margin-top:2rem}
+    .btn{background:var(--blue);color:var(--bg);border:none;border-radius:10px;padding:0.9rem 1.4rem;font-size:1rem;font-weight:600;cursor:pointer;transition:.25s}
+    .btn:hover{background:var(--yellow)}
+
+    /* Plans */
+    .section{padding:4rem 1rem}
+    .section h3{font-family:'Orbitron',sans-serif;color:var(--blue);font-size:1.8rem;text-align:center;margin:0 0 1.2rem}
+    .toggle-switch{margin:1rem auto 0;display:flex;align-items:center;justify-content:center;gap:1rem}
+    .switch{position:relative;display:inline-block;width:60px;height:30px}
+    .switch input{opacity:0;width:0;height:0}
+    .slider{position:absolute;cursor:pointer;inset:0;background:var(--grey);transition:.4s;border-radius:30px}
+    .slider:before{content:"";position:absolute;height:24px;width:24px;left:3px;bottom:3px;background:var(--blue);transition:.4s;border-radius:50%}
+    input:checked + .slider{background:var(--yellow)}
+    input:checked + .slider:before{transform:translateX(30px);background:var(--bg)}
+    .plan-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;max-width:1100px;margin:2rem auto 0}
+    .plan{background:var(--panel);padding:1.6rem;border-radius:16px;border:1px solid var(--border);transition:.25s}
+    .plan:hover{border-color:var(--blue);box-shadow:0 0 12px rgba(0,191,255,.25)}
+    .plan h4{font-family:'Orbitron',sans-serif;color:var(--yellow);font-weight:600;margin:0 0 .8rem;font-size:1.1rem}
+    .plan ul{list-style:none;margin:0;padding:0;color:var(--sub);font-weight:400;font-size:.95rem}
+    .plan ul li{margin:.4rem 0}
+    .plan .btn{margin-top:1rem}
+
+    /* Partners */
+    .partners{background:var(--muted);text-align:center}
+    .partners .logos{display:flex;overflow:hidden;white-space:nowrap;gap:2rem;animation:scroll 25s linear infinite;justify-content:center;margin-top:1rem}
+    .partners img{height:50px;filter:grayscale(100%) brightness(.85);transition:.25s}
+    .partners img:hover{filter:grayscale(0) brightness(1)}
+    @keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+    /* FAQ */
+    .faq{background:var(--panel)}
+    .faq-search{max-width:760px;margin:0 auto 1rem;display:flex;gap:.6rem}
+    .input{flex:1;padding:.8rem 1rem;border-radius:10px;border:1px solid var(--border);background:#11161c;color:var(--text);font-size:.95rem}
+    .accordion{max-width:900px;margin:1.2rem auto 0;display:grid;gap:.8rem}
+    .item{border:1px solid var(--border);border-radius:12px;background:#11161c}
+    .q{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.2rem;cursor:pointer}
+    .q h4{margin:0;color:var(--text);font-weight:600}
+    .a{display:none;padding:0 1.2rem 1rem;color:var(--sub);font-weight:400}
+    .item.open .a{display:block}
+
+    /* Articles */
+    .blog{background:var(--muted)}
+    .articles{max-width:1100px;margin:2rem auto 0;display:grid;gap:1.2rem;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+    .card{background:var(--panel);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:.25s}
+    .card:hover{border-color:var(--blue);box-shadow:0 0 10px rgba(0,191,255,.2)}
+    .card img{width:100%;height:160px;object-fit:cover;background:#0c1015}
+    .card .content{padding:1rem}
+    .card h4{margin:.2rem 0 .4rem;color:var(--text);font-weight:600}
+    .card p{margin:0;color:var(--sub);font-weight:400;font-size:.92rem}
+    .meta{display:flex;gap:.6rem;align-items:center;color:#9aa3aa;font-size:.8rem;margin-top:.6rem}
+
+    /* Modal (Teklif Al) */
+    .modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;padding:1rem;z-index:50}
+    .modal.active{display:flex}
+    .form-container{background:rgba(22,27,34,.95);padding:2rem;border-radius:16px;border:1px solid var(--border);box-shadow:0 0 20px rgba(0,191,255,.1);max-width:520px;width:100%;backdrop-filter:blur(8px);position:relative}
+    .form-container h2{font-family:'Orbitron',sans-serif;color:var(--blue);text-align:center;font-size:1.6rem;margin:0 0 1rem}
+    form{display:flex;flex-direction:column;gap:1.1rem}
+    label{font-size:.95rem;font-weight:500;color:var(--sub)}
+    input,select,textarea{width:100%;padding:.8rem;border-radius:10px;border:1px solid var(--border);background:#161B22;color:var(--text);font-size:.95rem;transition:.25s}
+    input:focus,select:focus,textarea:focus{border-color:var(--blue);outline:none;box-shadow:0 0 6px rgba(0,191,255,.3)}
+    textarea{resize:vertical;min-height:100px}
+    .file-upload{border:1px dashed #333;padding:.8rem;border-radius:10px;text-align:center;cursor:pointer;transition:.25s;color:#aaa;font-size:.9rem}
+    .file-upload:hover{border-color:var(--blue);color:var(--blue)}
+    .checkbox{display:flex;align-items:center;gap:.6rem;font-size:.85rem;color:#aaa;line-height:1.4}
+    .checkbox input{width:16px;height:16px;accent-color:var(--blue);margin:0}
+    .success-message{display:none;position:absolute;inset:0;background:rgba(13,17,23,.97);border-radius:16px;text-align:center;padding:2rem;color:var(--blue);font-family:'Orbitron',sans-serif;font-size:1.3rem;animation:fadeIn .5s ease forwards;display:flex;flex-direction:column;justify-content:center;align-items:center}
+    .success-message p{margin:.3rem 0}
+    @keyframes fadeIn{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
+
+    footer{margin-top:3rem;text-align:center;padding:1.5rem;font-size:.85rem;color:#777;border-top:1px solid var(--border);font-weight:400}
+
+    /* Responsive */
+    @media (max-width:768px){
+      header{padding:1rem;text-align:center}
+      .hero h2{font-size:1.8rem}
+      .hero p{font-size:.95rem}
+      .plan-grid{grid-template-columns:1fr}
+      .partners img{height:44px}
+    }
+    @media (max-width:480px){
+      .btn{width:100%}
+      .partners img{height:38px}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>cabi.io</h1>
+    <nav>
+      <a href="#plans">Hizmetler</a>
+      <a href="#faq">S.S.S.</a>
+      <a href="#blog">Makaleler</a>
+      <a href="#" id="openQuote">Teklif Al</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h2>Gücünü Optimize Et.</h2>
+    <p>Donanım danışmanlığı, sistem kurulumu ve performans optimizasyonu. Bireysel ve kurumsal ihtiyaçlara özel akıllı çözümler.</p>
+    <div class="cta-buttons">
+      <button class="btn" id="openQuote2">Teklif Al</button>
+      <a class="btn" href="#plans" style="display:inline-flex;align-items:center;justify-content:center">Hizmetleri Keşfet</a>
+    </div>
+  </section>
+
+  <!-- Plans -->
+  <section class="section" id="plans">
+    <h3>Hizmet Planını Seç</h3>
+    <div class="toggle-switch">
+      <span>Bireysel</span>
+      <label class="switch"><input type="checkbox" id="planToggle"><span class="slider"></span></label>
+      <span>Kurumsal</span>
+    </div>
+    <div class="plan-grid" id="plansGrid"><!-- JS dolduracak --></div>
+  </section>
+
+  <!-- Partners -->
+  <section class="section partners">
+    <h3>Çözüm Ortaklarımız</h3>
+    <div class="logos">
+      <img src="partner1.png" alt="Partner 1"><img src="partner2.png" alt="Partner 2"><img src="partner3.png" alt="Partner 3"><img src="partner4.png" alt="Partner 4"><img src="partner5.png" alt="Partner 5">
+      <img src="partner1.png" alt="Partner 1"><img src="partner2.png" alt="Partner 2"><img src="partner3.png" alt="Partner 3">
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section faq" id="faq">
+    <h3>Sıkça Sorulan Sorular</h3>
+    <div class="faq-search">
+      <input class="input" id="faqSearch" placeholder="Soru ara… (örn: undervolt, kurulum, garanti)" />
+      <button class="btn" id="clearSearch" type="button">Temizle</button>
+    </div>
+    <div class="accordion" id="faqList"><!-- JS dolduracak --></div>
+  </section>
+
+  <!-- Blog -->
+  <section class="section blog" id="blog">
+    <h3>Makaleler</h3>
+    <div class="articles" id="articlesGrid"><!-- JS dolduracak --></div>
+  </section>
+
+  <footer>© 2025 cabi.io — Gücünü Optimize Et.</footer>
+
+  <!-- Inline editable JSON blocks: Dilediğinde içerikleri düzenle -->
+  <script id="faqData" type="application/json">
+  {
+    "items": [
+      {"q":"Undervolt işlemi güvenli mi?","a":"Doğru voltaj aralığında ve testlerle yapıldığında güvenlidir; sıcaklık ve güç tüketimini düşürürken performansı korumayı hedefleriz."},
+      {"q":"Online optimizasyon nasıl ilerliyor?","a":"Uzaktan bağlantı ile BIOS/driver ayarları ve profil oluşturma yapılır; her adımı size anlatarak ilerleriz."},
+      {"q":"Tam sistem kurulumunda neler var?","a":"Parça seçimi danışmanlığı, yerinde montaj, kablo&hava akışı düzeni, sürücü ve test raporu dahil."}
+    ]
+  }
+  </script>
+
+  <script id="articlesData" type="application/json">
+  {
+    "items": [
+      {"title":"Undervolt Nedir? Temel Rehber","summary":"Güç tüketimini düşürürken performansı nasıl korursunuz? Adım adım başlangıç rehberi.","date":"2025-11-06","slug":"undervolt-nedir","image":"cover1.jpg"},
+      {"title":"Küçük İşletmeler İçin NAS Seçimi","summary":"Kapasite, RAID ve erişim gereksinimlerine göre doğru NAS seçimi.","date":"2025-11-06","slug":"kobi-nas-secimi","image":"cover2.jpg"},
+      {"title":"OC/UV Sonrası Testler","summary":"Stabiliteyi kanıtlayan benchmark ve stres testleri nasıl yapılır?","date":"2025-11-06","slug":"oc-uv-test","image":"cover3.jpg"}
+    ]
+  }
+  </script>
+
+  <script id="plansData" type="application/json">
+  {
+    "bireysel": [
+      {"title":"Donanım Danışmanlığı","features":["Online görüşme","Uyumluluk analizi","Fiyat/performans önerileri"],"cta":"Danışmanlık Başlat"},
+      {"title":"Sistem Optimizasyonu (OC/UV) — Online","features":["Uzaktan bağlantı","BIOS & sürücü ayarları","Termal denge testi"],"cta":"Danışmanlık Başlat"},
+      {"title":"Sistem Optimizasyonu (OC/UV) — Yerinde","features":["Yerinde ölçüm & test","Termal pasta/fan kontrolü","Kablo & hava akışı düzeni"],"cta":"Randevu Al"},
+      {"title":"Tam Sistem Kurulumu","features":["Parça seçimi","Yerinde montaj","Optimizasyon & test"],"cta":"Teklif Al"}
+    ],
+    "kurumsal": [
+      {"title":"Paket 1 — Temel Kurulum","features":["Bilgisayar & ağ","Mail sistemi","2 disk NAS + yedekleme"],"cta":"Teklif Al"},
+      {"title":"Paket 2 — Standart Altyapı","features":["Merkezi mail","RAID NAS","Kullanıcı politikaları"],"cta":"Teklif Al"},
+      {"title":"Paket 3 — Gelişmiş Altyapı","features":["VPN & güvenlik","Sanallaştırma","Bakım & izleme"],"cta":"Teklif Al"}
+    ]
+  }
+  </script>
+
+  <!-- Modal: Teklif Al formu -->
+  <div class="modal" id="quoteModal" aria-hidden="true">
+    <div class="form-container">
+      <h2>Teklif Al</h2>
+      <form id="quoteForm">
+        <label for="name">Ad Soyad</label>
+        <input type="text" id="name" name="name" placeholder="Adınızı ve soyadınızı girin" required>
+
+        <label for="email">E-posta Adresi</label>
+        <input type="email" id="email" name="email" placeholder="ornek@mail.com" required>
+
+        <label for="phone">Telefon Numarası</label>
+        <input type="tel" id="phone" name="phone" placeholder="05xx xxx xx xx" pattern="[0-9]{10,11}" required>
+
+        <label for="company">Firma Adı (Opsiyonel)</label>
+        <input type="text" id="company" name="company" placeholder="Firma adınız">
+
+        <label for="service">Talep Edilen Hizmet</label>
+        <select id="service" name="service" required>
+          <option value="">Hizmet Seçin</option>
+          <option value="danismanlik">Donanım Danışmanlığı</option>
+          <option value="optimizasyon">Sistem Optimizasyonu</option>
+          <option value="kurulum">Kurulum</option>
+          <option value="diger">Diğer</option>
+        </select>
+
+        <label for="message">Kısa Açıklama</label>
+        <textarea id="message" name="message" placeholder="Projeniz veya ihtiyacınız hakkında bilgi verin..." required></textarea>
+
+        <label class="file-upload">Dosya yükle (isteğe bağlı) <input type="file" hidden></label>
+        <label class="checkbox"><input type="checkbox" required> Verdiğim bilgilerin teklif amacıyla kullanılmasına izin veriyorum.</label>
+
+        <button class="btn" type="submit">Gönder</button>
+      </form>
+      <div class="success-message" id="successMessage">
+        <p>✅ Teşekkürler!</p>
+        <p>Teklif talebiniz başarıyla gönderildi. Kısa süre içinde sizinle iletişime geçeceğiz.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Helpers
+    const $ = (s,scope=document)=>scope.querySelector(s);
+    const $$ = (s,scope=document)=>Array.from(scope.querySelectorAll(s));
+
+    // Plans render
+    const plansData = JSON.parse($('#plansData').textContent);
+    const plansGrid = $('#plansGrid');
+    const planToggle = $('#planToggle');
+
+    function renderPlans(mode){
+      const list = plansData[mode ? 'kurumsal' : 'bireysel'];
+      plansGrid.innerHTML = list.map(p=>`<div class="plan">\n <h4>${p.title}</h4>\n <ul>${p.features.map(f=>`<li>${f}</li>`).join('')}</ul>\n <button class="btn">${p.cta}</button>\n</div>`).join('');
+    }
+    renderPlans(false);
+    planToggle.addEventListener('change', e=>renderPlans(e.target.checked));
+
+    // FAQ render + search
+    const faqData = JSON.parse($('#faqData').textContent);
+    const faqList = $('#faqList');
+    const faqSearch = $('#faqSearch');
+    const clearSearch = $('#clearSearch');
+
+    function drawFAQ(items){
+      faqList.innerHTML = items.map((it,i)=>`<div class="item" data-index="${i}">\n  <div class="q"><h4>${it.q}</h4><span>+</span></div>\n  <div class="a">${it.a}</div>\n</div>`).join('');
+      $$('.q', faqList).forEach(q=>q.addEventListener('click',()=>q.parentElement.classList.toggle('open')));
+    }
+    drawFAQ(faqData.items);
+
+    faqSearch.addEventListener('input', ()=>{
+      const q = faqSearch.value.toLowerCase();
+      const filtered = faqData.items.filter(it=>it.q.toLowerCase().includes(q)||it.a.toLowerCase().includes(q));
+      drawFAQ(filtered);
+    });
+    clearSearch.addEventListener('click', ()=>{faqSearch.value='';drawFAQ(faqData.items)});
+
+    // Articles render
+    const artData = JSON.parse($('#articlesData').textContent);
+    const articlesGrid = $('#articlesGrid');
+    function renderArticles(){
+      articlesGrid.innerHTML = artData.items.map(a=>`<article class="card">\n  <img src="${a.image}" alt="${a.title}">\n  <div class="content">\n    <h4>${a.title}</h4>\n    <p>${a.summary}</p>\n    <div class="meta"><span>${new Date(a.date).toLocaleDateString('tr-TR')}</span><span>•</span><span>${a.slug}</span></div>\n  </div>\n</article>`).join('');
+    }
+    renderArticles();
+
+    // Modal controls
+    const modal = $('#quoteModal');
+    const openQuote = $('#openQuote');
+    const openQuote2 = $('#openQuote2');
+    [openQuote, openQuote2].forEach(btn=>btn && btn.addEventListener('click', e=>{e.preventDefault(); modal.classList.add('active')}));
+    modal.addEventListener('click', (e)=>{ if(e.target===modal) modal.classList.remove('active'); });
+
+    // Form success
+    const form = $('#quoteForm');
+    const successMsg = $('#successMessage');
+    form.addEventListener('submit', (e)=>{ e.preventDefault(); form.style.display='none'; successMsg.style.display='flex'; });
+  </script>
+</body>
+</html>
